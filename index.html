@@ -1,12 +1,48 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Interface de registro</title>
 </head>
+
 <body>
-    
+    <main>
+        <h1> Sistema de Registro </h1>
+        <div class="container">
+            <label for="nomeIn">Nome</label>
+            <input type="text" name="Nome" id="nomeIn">
+            <label for="mailIN">E-mail</label>
+            <input type="email" name="E-mail" id="mailIN">
+
+            <div class="btn">
+                <button>Registrar</button>
+                <button>Deletar</button>
+                <button>Visualizar</button>
+            </div>
+        </div>
+    </main>
+
+    <div class="overlay-lista" id="overlayLi">
+        <div class="modal-lista">
+            <h2>Todos os usuários</h2>
+            <p>Aqui apareceriam os usuários vindos da API.</p>
+            <button class="close-btn" onclick="">Fechar</button>
+        </div>
+    </div>
+
+    <div class="overlay-delete" id="overlayDlt">
+        <div class="modal-delete">
+            <h2>Todos os usuários</h2>
+            <p>Insira a baixo o e-mail do usuário a ser deletado</p>
+            <label for="mailDlt">E-mail</label>
+            <input type="email" name="E-mail" id="mailDlt">
+            <button>Delete</button>
+            <button class="close-btn" onclick="">Fechar</button>
+        </div>
+    </div>
 </body>
+<script src="app.js"></script>
 </html>
