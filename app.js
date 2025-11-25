@@ -1,43 +1,96 @@
-//Só irá carregar o js quando toda a página for carregada.
+// Só irá carregar o js quando toda a página for carregada.
 document.addEventListener('DOMContentLoaded', () => {
-    // Seleciona todos os botões dentro da div .btn e transforma em array.
     const btns = Array.from(document.querySelectorAll('.btn > button'));
-    const [btnRegistrar, btnDeletar, btnVisualizar] = btns;
-    //Referencia os dois  overlays.
+    const [btnRegistrar, btnVisualizar] = btns;
+
     const overlayLi = document.getElementById('overlayLi');
-    const overlayDlt = document.getElementById('overlayDlt');
-    // Abrir visualizar."?" é usado para não retornar erro, se btnVisualizar nao existir.
+
     btnVisualizar?.addEventListener('click', () => {
-        //Altera o display para flex.
         if (overlayLi) overlayLi.style.display = 'flex';
     });
-    // Abrir delete.
-    btnDeletar?.addEventListener('click', () => {
-        if (overlayDlt) overlayDlt.style.display = 'flex';
-    });
-    // Fechar todos os modais quando clicar no botão .close-btn.
-    //Pega todos os botões com a classe .close-btn.
+
     document.querySelectorAll('.close-btn').forEach(btn => {
-        //e "passa" por eles esperando um click.
         btn.addEventListener('click', () => {
-           // Após o clique, seleciona os dois overlays e define display="none" para ambos.
-            document.querySelectorAll('.overlay-lista, .overlay-delete').forEach(o => {
-                //Assim, o que  estiver ativo "flex", fecha com o "none".
+            document.querySelectorAll('.overlay-lista').forEach(o => {
                 o.style.display = 'none';
             });
         });
     });
-    // Fechar também ao clicar no overlay (fora do modal).
-    //Pega os dois overlays no array e "passa" por eles.
-    [overlayLi, overlayDlt].forEach(overlayAtual => {
-        // Verifica se o overlay existe. Caso contrário, retorna dessa iteração e passa para o próximo.
+
+    [overlayLi].forEach(overlayAtual => {
         if (!overlayAtual) return;
-        //se existir, vai aguardar um ouvinte de click.
         overlayAtual.addEventListener('click', (e) => {
-           // e.target é o elemento onde o clique aconteceu.
-            /* Se for estritamente igual ao overlay, ou seja, no overlay
-            o mesmo recebe o display "none" e fecha*/
             if (e.target === overlayAtual) overlayAtual.style.display = 'none';
         });
     });
+
+    carregarUsuarios();
+});
+
+const users = document.getElementById("lista");
+
+function carregarUsuarios() {
+    users.innerHTML = ""; // limpa antes de carregar
+
+    fetch("https://crudcrud.com/api/67dca9c0adad48c68c96a0798f5d3175/login2")
+        .then(resposta => resposta.json())
+        .then((listaU) => {
+            listaU.forEach(usuario => {
+                const item = document.createElement("li");
+                item.dataset.id = usuario._id;  // <--- salvando id no HTML
+
+                item.innerHTML = `
+                    <p class="N1">Nome: </p><p class="N2">${usuario.Nome}</p>
+                    <p class="N3">Email: </p><p class="N4">${usuario.Email}</p>
+                    <button class="delete">x</button>
+                `;
+                users.appendChild(item)
+            });
+        });
+}
+
+// =============== REGISTRAR ===============
+function Registrar() {
+    const nome = document.getElementById("nomeIn").value.trim();
+    const email = document.getElementById("mailIN").value.trim();
+
+    if (nome === "" || email === "") {
+        alert("Preencha nome e email antes de registrar!");
+        return;
+    }
+
+    const novoUsuario = {
+        Nome: nome,
+        Email: email
+    };
+
+    fetch("https://crudcrud.com/api/67dca9c0adad48c68c96a0798f5d3175/login2", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(novoUsuario)
+    })
+        .then(res => {
+            alert("Usuário registrado com sucesso!");
+            document.getElementById("nomeIn").value = "";
+            document.getElementById("mailIN").value = "";
+            carregarUsuarios();
+        });
+}
+
+// =============== DELETAR ===============
+users.addEventListener("click", (e) => {
+    if (e.target.classList.contains("delete")) {
+
+        const id = e.target.parentElement.dataset.id;
+
+        fetch(`https://crudcrud.com/api/67dca9c0adad48c68c96a0798f5d3175/login2/${id}`, {
+            method: "DELETE"
+        })
+            .then(() => {
+                alert("Usuário removido!");
+                e.target.parentElement.remove();
+            });
+    }
 });

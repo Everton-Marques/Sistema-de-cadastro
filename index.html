@@ -18,31 +18,21 @@
             <input type="email" name="E-mail" id="mailIN">
 
             <div class="btn">
-                <button>Registrar</button>
-                <button>Deletar</button>
+                <button onclick="Registrar()">Registrar</button>
                 <button>Visualizar</button>
             </div>
         </div>
     </main>
-
     <div class="overlay-lista" id="overlayLi">
         <div class="modal-lista">
-            <h2>Todos os usuários</h2>
-            <p>Aqui apareceriam os usuários vindos da API.</p>
-            <button class="close-btn" onclick="">Fechar</button>
-        </div>
-    </div>
-
-    <div class="overlay-delete" id="overlayDlt">
-        <div class="modal-delete">
-            <h2>Todos os usuários</h2>
-            <p>Insira a baixo o e-mail do usuário a ser deletado</p>
-            <label for="mailDlt">E-mail</label>
-            <input type="email" name="E-mail" id="mailDlt">
-            <button>Delete</button>
+            <div class="lista">
+                <h2>Todos os usuários</h2>
+                <ul id="lista"></ul>
+            </div>
             <button class="close-btn" onclick="">Fechar</button>
         </div>
     </div>
 </body>
 <script src="app.js"></script>
+
 </html>
