@@ -1,7 +1,7 @@
 // Só irá carregar o js quando toda a página for carregada.
 document.addEventListener('DOMContentLoaded', () => {
     const btns = Array.from(document.querySelectorAll('.btn > button'));
-    const [btnRegistrar, btnVisualizar] = btns;
+    const [btnVisualizar] = btns;
 
     const overlayLi = document.getElementById('overlayLi');
 

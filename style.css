@@ -151,3 +151,8 @@ li p {
 #lista li .delete:hover {
   background: #a70000;
 }
+
+.errolista{
+  background: none;
+  font-size: 20pt;
+}
