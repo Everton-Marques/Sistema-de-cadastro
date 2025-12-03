@@ -1,7 +1,7 @@
 export function carregarUsuarios(ListaU) {
     ListaU.innerHTML = ""; // limpa antes de carregar
 
-    fetch("https://crudcrud.com/api/67dca9c0adad48c68c96a0798f5d3175/login2")
+    fetch("https://crudcrud.com/api/0dcf4035f1fe4680826d437c11be6c77/login4")
         .then(resposta => resposta.json())
         .then((listaUsers) => {
             listaUsers.forEach(usuario => {
@@ -28,7 +28,7 @@ export function registrarUsuario(us) {
         Email: us.email
     };
     console.log("objeto", us)
-    fetch("https://crudcrud.com/api/67dca9c0adad48c68c96a0798f5d3175/login2", {
+    fetch("https://crudcrud.com/api/0dcf4035f1fe4680826d437c11be6c77/login4", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -42,4 +42,17 @@ export function registrarUsuario(us) {
             carregarUsuarios();
         });
 }
+export function Deletar(idUser, elementoHTML){
+      fetch(`https://crudcrud.com/api/0dcf4035f1fe4680826d437c11be6c77/login4/${idUser}`, {
+            method: "DELETE"
+        })
+        .then(() => {
+            alert("Usuário removido!");
+            elementoHTML.remove();
+        })
+          .catch(erro => {
+            console.error("Erro ao Remover usuário", erro);
+        });
+}
+
 

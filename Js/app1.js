@@ -1,16 +1,16 @@
 import { Usuario } from "./class.js";
-import { carregarUsuarios, registrarUsuario} from "./utils.js";
+import { carregarUsuarios, registrarUsuario, Deletar } from "./utils.js";
 
 const users = document.getElementById("lista");
-const btnRegistrar = document.getElementById("btnALL");
+const btnRegistrar = document.getElementById("btnR");
 const overlayLi = document.getElementById('overlayLi');
+const btndelete = document.getElementById("btnD")
 
 document.addEventListener('DOMContentLoaded', () => {
     const btnVisualizar = document.getElementById("btnV")
 
-    const overlayLi = document.getElementById('overlayLi');
-
     btnVisualizar?.addEventListener('click', () => {
+        carregarUsuarios(users)
         if (overlayLi) overlayLi.style.display = 'flex';
     });
 
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     carregarUsuarios(users);
 
 });
-//Registro  e.preventDefault()
+//Registro
 btnRegistrar.addEventListener("click", (e) => {
     const nome = document.getElementById("nomeIn").value;
     const email = document.getElementById("mailIN").value;
@@ -42,4 +42,13 @@ btnRegistrar.addEventListener("click", (e) => {
     const usuario = new Usuario(nome, email);
     registrarUsuario(usuario);
 })
+users.addEventListener("click", (e) => {
+    if (e.target.classList.contains("delete")) {
+        
+        const item = e.target.parentElement;
+        const id = item.dataset.id;
+
+        Deletar(id, item);
+    }
+});
 
